@@ -160,7 +160,7 @@ For the reader looking for the statistical distributions of relevance, who may b
 
 \subsection{Statistical Distribution for a Single Cospectrum}
 \label{sec:single_cospectrum}
-Consider two independently distributed, constant, stationary time series $\mathbf{x} = \{x_k\}_{k=1}^N$ and $\mathbf{y} = \{y_k\}_{k=1}^N$ with $N$ data points taken at simultaneous time intervals $\{t_k\}_{k=1}^N$. Assume for simplicity that the measurements $x_k$ and $y_k$ are normally distributed, such that $x_k \sim \mathcal{N}(\overline{x}, w_x)$ and $y_k \sim \mathcal{N}(\overline{y}, w_y)$ with means $\overline{x}, \overline{y}$ and variances $w_x, w_y$. The data points in the time series $\mathbf{x}$ and $\mathbf{y}$ can be expressed in terms of a Fourier series,
+Consider two independently distributed, constant, stationary time series $\mathbf{x} = \{x_k\}_{k=1}^N$ and $\mathbf{y} = \{y_k\}_{k=1}^N$ with $N$ data points taken at simultaneous time intervals $\{t_k\}_{k=1}^N$. Assume for simplicity that the measurements $x_k$ and $y_k$ are normally distributed, such that $x_k \sim \mathcal{N}(\overline{x}, w_x^2)$ and $y_k \sim \mathcal{N}(\overline{y}, w_y^2)$ with means $\overline{x}, \overline{y}$ and variances $w_x^2, w_y^2$. The data points in the time series $\mathbf{x}$ and $\mathbf{y}$ can be expressed in terms of a Fourier series,
 
 \begin{eqnarray}
 x_k & = & \frac{1}{N} \sum_{j}{\mathcal{F}_x(j)} \nonumber \\
@@ -194,7 +194,7 @@ Note that for strictly real-valued time series, as light curves in astronomy alw
 C_j = \frac{1}{2}  (A_{xj}A_{yj} + B_{xj}B_{yj}) \, .
 \end{equation}
 
-\noindent For normally distributed light curves (and indeed for uncertainties coming from a wide range of statistical distributions, including the Poisson distribution, if $N$ is large), the real and imaginary amplitude components are distributed as $A_{xj}, B_{xj} \sim \mathcal{N}(0, \sigma_x)$ with $\sigma_x =  \sqrt{\frac{\sum_{k=1}^{N}{x_k}}{2}}$ and  $A_{yj}, B_{yj} \sim \mathcal{N}(0, \sigma_y)$ with $\sigma_y = \sqrt{\frac{\sum_{k=1}^{N}{y_k}}{2}}$. 
+\noindent For normally distributed light curves (and indeed for uncertainties coming from a wide range of statistical distributions, including the Poisson distribution, if $N$ is large), the real and imaginary amplitude components are distributed as $A_{xj}, B_{xj} \sim \mathcal{N}(0, \sigma_x^2)$ with $\sigma_x =  \sqrt{\frac{\sum_{k=1}^{N}{x_k}}{2}}$ and  $A_{yj}, B_{yj} \sim \mathcal{N}(0, \sigma_y^2)$ with $\sigma_y = \sqrt{\frac{\sum_{k=1}^{N}{y_k}}{2}}$. 
 For standard periodograms, $A_{xj} = A_{yj}$ and $B_{xj} = B_{yj}$, and the power spectral density reduces to $P_j = \frac{1}{2} (A_j^2 + B_j^2)$, which is well-known to follow a $\chi^2$ distribution with $2$ degrees of freedom. 
 
 Because this condition is not fulfilled for cospectra, we need to derive the probability distribution of the sum of the products over \textit{independent} Gaussian random variables. The probability distribution of the product of two random variables\footnote{We continue the following derivation using the amplitudes $A_j$, but the same arguments apply exactly to the imaginary amplitudes $B_j$.} $Z = A_{xj}A_{yj}$ is called the product distribution, defined as 
