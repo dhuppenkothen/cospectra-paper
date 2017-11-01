@@ -141,13 +141,14 @@ While in principle, the statistics of the periodogram is well understood and cha
 In the past years, the field of \textit{spectral timing} has enjoyed significant success by making it possible to combine both temporal and spectral information in a single model. Within this framework, the complex cross spectrum---defined as the Fourier transform of one time series with the complex conjugate of the Fourier transform of a second time series--holds a central position. The cross spectrum is commonly used to compute phase lags, which are easily converted to time lags and are central for understanding e.g.\ reverberation mapping in accreting black holes \citep[see][for a recent review]{uttley2014}. 
 
 The real part of the cross spectrum, also named \textit{cospectrum}, has gained less attention, but can be just as useful. It has long been used to study gravity waves in the Earth's atmosphere \citep[e.g.][]{john2016}, models of the Martian atmosphere \citep[e.g.][]{wang2016}, the solar heliosphere \citep[e.g.][]{vigeesh2017}, surface elevation of arctic sea ice \citep[e.g.][]{ardhuin2016} and drifting snow \citep[e.g.][]{paterna2016} as well as surface gravity waves in beaches \citep[e.g.][]{fiedler2015} and eddy heat flux in the Earth's troposphere \citep[e.g.][]{wang2015,zurita-gotor2017}.
-Within astronomy, it has recently been recognized as one approach to mitigate instrumental effects by making use of the independent detectors present in some telescopes. Where in standard analysis, light curves of multiple detectors are summed before Fourier transforming the summed light curve, it is possible to instead Fourier-transform the signal of two independent detectors. 
-The resulting powers will be less affected by an instrumental effect called dead time (see details in \citealt{Bachetti+15}), which leads to frequency-dependent changes in the mean and variance of the statistical distributions governing the periodogram. This is relevant for current X-ray detectors such as \nustar\ and \astrosat, but will also be relevant to future missions with multiple detectors like \ixpe. This approach has recently been used in \nustar\ studies of millisecond pulsars \citep{ferrigno2017}, Ultraluminous X-ray Sources \citep{bachetti2016} and X-ray binaries \citep{barriere2015,zoghbi2016,ingram2016,huppenkothen2017,stiele2017}.
-Similarly, the cospectrum of two time series taken with the same instrument, but in different wavelength ranges, can be used to characterize the coherent variability in both time series as a function of frequency.
 
-While much has been written on the subject of the statistics of cross spectra and time lags \citep[e.g.][]{epitropakis2016}, the derivation of cospectral statistics is notably absent from the astronomy literature, and most publications assume that either the $\chi^2_2$ distribution used for standard periodograms or a Gaussian distribution for averaged spectra is appropriate. That these assumptions are valid has not been shown until now. 
+Within astronomy, it has recently been recognized as one approach to mitigate instrumental effects by making use of the independent detectors present in some telescopes. Where in standard analysis, light curves of multiple detectors are summed before Fourier transforming the summed light curve, it is possible to instead Fourier-transform the signal of two independent detectors \textbf{within the same instrument observing the same source strictly simultaneously in the same energy band}. 
+The resulting \textbf{co-spectral} powers will be less affected by an instrumental effect called \textit{dead time} (see details in \citealt{Bachetti+15}). \textbf{In many X-ray detectors, after detection of a photon there is a time interval during which the detector (or in imaging detectors the individual pixel) is blocked from detecting a second photon. This time interval is generally called \textit{dead time} (the detector is effectively ``dead'', and incoming photons will not produce a signal) and its characteristic time scale is set by the details of the detector and can range from very short ($2\mu\mathrm{s}$ in the \fermi\ Gamma-Ray Burst Monitor to very long $2.5\mathrm{ms}$ in \nustar).} It leads to frequency-dependent changes in the mean and variance of the statistical distributions governing the periodogram, \textbf{which cannot be mitigated by averaging periodograms of multiple segments}. This is relevant for current X-ray missions \textbf{carrying two identical detectors} such as \nustar\ and \astrosat, but will also be relevant to future missions with multiple detectors like \ixpe. This approach has recently been used in \nustar\ studies of millisecond pulsars \citep{ferrigno2017}, Ultraluminous X-ray Sources \citep{bachetti2016} and X-ray binaries \citep{barriere2015,zoghbi2016,ingram2016,huppenkothen2017,stiele2017}. \textbf{It is particularly important for instruments like \nustar\ which have a fairly long dead time and thus exhibit dead time effects the power spectrum at frequencies comparable to those where signals are expected, and at fairly low count rates}.  
+Similarly, the cospectrum of two time series taken with the same instrument, but in different wavelength ranges, can be used to characterize the coherent, \textbf{phase-aligned} variability in both time series as a function of frequency.
 
-In this paper, we lay out the basic statistical distributions for detecting periodic and narrow quasi-periodic signals in the presence of detector noise (e.g.\ photon counting statistics) for both single and averaged cospectra. We show below that unlike for the periodogram, the statistical distribution for a single cospectrum reduces to a Laplace distribution, while the distribution for averaged cospectra is considerably more complex. We also find that for averaged cospectra consisting of more than $\sim$30 averaged individual segments, the assumption of a Gaussian distribution is indeed appropriate for single-trial tail probabilities and reduces computation overhead. However, for averaged cospectra of fewer segments, more stringent significance thresholds or large numbers of trials, the statistical distribution--and hence the derived $p$-values used for period detection--deviate significantly from a Gaussian distribution.
+While much has been written on the subject of the statistics of cross spectra and time lags \citep[e.g.][]{epitropakis2016}, the derivation of cospectral statistics is notably absent from the astronomy literature, and most publications \textit{utilizing the approach of forming co-spectra from identical, but independent detectors observing the same source} assume that either the $\chi^2_2$ distribution used for standard periodograms or a Gaussian distribution for averaged spectra is appropriate. That these assumptions are valid has not been shown until now. 
+
+In this paper, we lay out the basic statistical distributions for detecting periodic and narrow quasi-periodic signals in the presence of detector noise (e.g.\ photon counting statistics) for both single and averaged cospectra. We show below that unlike for the periodogram, the statistical distribution for a single cospectrum reduces to a Laplace distribution, while the distribution for averaged cospectra is considerably more complex. We also find that for averaged cospectra consisting of more than $\sim$30 averaged individual segments, the assumption of a Gaussian distribution is indeed appropriate for single-trial tail probabilities and reduces computation overhead. However, for averaged cospectra of fewer segments, more stringent significance thresholds or large numbers of trials, the statistical distribution--and hence the derived $p$-values used for period detection--deviate significantly from a Gaussian distribution. \textbf{We note that the results below hold only for cases where the signal to be detected is phase-aligned in both light curves. This must be true by definition for analyses utilizing data from independent, identical detectors observing the same source simultaneously, but might not strictly be true for observations of the same source e.g.\ in different energy bands. We caution the reader that for signals that are not phase-aligned, the resulting power may decrease significantly and result in a non-detectable signal.}
 
 The paper is laid out as follows. In Section \ref{sec:single_cospectrum}, we derive the PDF of a single cospectrum, and show associated simulations and detection thresholds for period detection in Section \ref{sec:detectionthresholds}. Section \ref{sec:averaged_cospectra} extends the derivation to the common case where the cospectra of several time series are averaged. We show that the statistical distribution indeed changes from a Laplace distribution once multiple cospectra are averaged and becomes consecutively more Gaussian as a larger number of cospectra are included in the average in Section \ref{sec:averaged_detthres}. Finally, Section \ref{sec:nustarqpo} presents a real-world example using simulated \nustar\ data of a quasi-periodic oscillation (QPO) as commonly found in accreting neutron star X-ray binaries. We end in Section \ref{sec:discussion} with a short discussion and conclusion. All figures and results are reproducible, and the associated code can be found online\footnote{\url{https://github.com/dhuppenkothen/cospectra-paper}}.
 In a second, forthcoming paper, we will treat the considerably more complex case of cospectra where the time series consist of stochastic variability and show how to model the cospectrum in both a Maximum Likelihood and Bayesian framework.
@@ -158,9 +159,26 @@ For the reader looking for the statistical distributions of relevance, who may b
 \section{The Statistical Distributions of Cospectral Densities}
 \label{sec:whitenoise_cospectra}
 
+\textbf{In the following, we will consider the example of detecting a strictly periodic or very narrow quasi-periodic signal in the presence of simple white noise, as is commonly the case in pulsar searches in X-ray data. We assume that both the white noise and the periodic signal are wide-sense stationary and the light curve is evenly sampled. While the white noise is also assumed to be strictly stochastic, the signal to be detected may be either deterministic (in the case of a strictly periodic signal) or stochastic (for a quasi-periodic oscillation). We then aim to reject a null hypothesis where the observed cospectral power at a given frequency can be explained by white noise alone.}
+
 \subsection{Statistical Distribution for a Single Cospectrum}
 \label{sec:single_cospectrum}
-Consider two independently distributed, constant, stationary time series $\mathbf{x} = \{x_k\}_{k=1}^N$ and $\mathbf{y} = \{y_k\}_{k=1}^N$ with $N$ data points taken at simultaneous time intervals $\{t_k\}_{k=1}^N$. Assume for simplicity that the measurements $x_k$ and $y_k$ are normally distributed, such that $x_k \sim \mathcal{N}(\overline{x}, w_x^2)$ and $y_k \sim \mathcal{N}(\overline{y}, w_y^2)$ with means $\overline{x}, \overline{y}$ and variances $w_x^2, w_y^2$. The data points in the time series $\mathbf{x}$ and $\mathbf{y}$ can be expressed in terms of a Fourier series,
+
+Consider two independently distributed, \textbf{evenly-sampled}, constant, stationary time series,
+
+\begin{eqnarray}
+\mathbf{x} &=& \{x_k\}_{k=1}^N \nonumber \\
+\mathbf{y} &=& \{y_k\}_{k=1}^N \nonumber
+\end{eqnarray}
+
+\noindent with $N$ data points taken at simultaneous time intervals $\{t_k\}_{k=1}^N$ \textbf{with a constant time resolution $\Delta t$ and a total duration $T = N\Delta t$}. Assume for simplicity that the measurements $x_k$ and $y_k$ are normally distributed, such that 
+
+\begin{eqnarray}
+x_k &\sim& \mathcal{N}(\overline{x}, w_x^2)  \nonumber \\
+y_k &\sim& \mathcal{N}(\overline{y}, w_y^2) \nonumber
+\end{eqnarray} 
+
+\noindent with means $\overline{x}, \overline{y}$ and variances $w_x^2, w_y^2$. The data points in the time series $\mathbf{x}$ and $\mathbf{y}$ can be expressed in terms of a Fourier series,
 
 \begin{eqnarray}
 x_k & = & \frac{1}{N} \sum_{j}{\mathcal{F}_x(j)} \nonumber \\
@@ -174,7 +192,8 @@ x_y & = & \frac{1}{N} \sum_{j}{\mathcal{F}_y(j)}
 \mathcal{F}_y(j) &= & \frac{1}{2} (A_{yj} - i B_{yj}) e^{-i\left( \frac{2 \pi j t}{T} \right)} \, ,
 \end{eqnarray}
 
-\noindent where $i = \sqrt{-1}$, and $A_{xj}, A_{yj}$ and $B_{xj}, B_{yj}$ describe the real and imaginary parts of the Fourier amplitudes, respectively (for a pedagogical introduction into Fourier analysis, see \citealt{vanderklis1989}). The complex cross spectrum is then calculated by multiplying the Fourier transform of light curve $\mathbf{x}$ with the complex conjugate of the Fourier transform of light curve $\mathbf{y}$ (\citealt{vaughan1997,nowak1999}, see also \citealt{uttley2014} for a recent review of spectral timing techniques):
+\noindent where $i = \sqrt{-1}$, and $A_{xj}, A_{yj}$ and $B_{xj}, B_{yj}$ describe the real and imaginary parts of the Fourier amplitudes, respectively (for a pedagogical introduction into Fourier analysis, see \citealt{vanderklis1989}). \textbf{We restrict $\mathcal{F}_x(j)$ and $\mathcal{F}_y(j)$ to frequencies between $\nu_{j=0} = 1/T$ and the Nyquist frequency $\nu_{j=N/2} = 1/(2\Delta t)$.}
+The complex cross spectrum is then calculated by multiplying the Fourier transform of light curve $\mathbf{x}$ with the complex conjugate of the Fourier transform of light curve $\mathbf{y}$ (\citealt{vaughan1997,nowak1999}, see also \citealt{uttley2014} for a recent review of spectral timing techniques):
 
 \begin{eqnarray}
 \mathcal{F}_x(j) \mathcal{F}_y^*(j) & = & \frac{1}{2} (A_{xj} - i B_{xj}) e^{i \frac{2 \pi j t}{T}} \frac{1}{2} (A_{yj} + i B_{yj}) e^{i \frac{-2 \pi j t}{T}}\nonumber \\ 
@@ -194,7 +213,8 @@ Note that for strictly real-valued time series, as light curves in astronomy alw
 C_j = \frac{1}{2}  (A_{xj}A_{yj} + B_{xj}B_{yj}) \, .
 \end{equation}
 
-\noindent For normally distributed light curves (and indeed for uncertainties coming from a wide range of statistical distributions, including the Poisson distribution, if $N$ is large), the real and imaginary amplitude components are distributed as $A_{xj}, B_{xj} \sim \mathcal{N}(0, \sigma_x^2)$ with $\sigma_x =  \sqrt{\frac{\sum_{k=1}^{N}{x_k}}{2}}$ and  $A_{yj}, B_{yj} \sim \mathcal{N}(0, \sigma_y^2)$ with $\sigma_y = \sqrt{\frac{\sum_{k=1}^{N}{y_k}}{2}}$. 
+\noindent For \textbf{evenly sampled}, normally distributed light curves (and indeed for uncertainties coming from a wide range of statistical distributions, including the Poisson distribution, if $N$ is large), the real and imaginary amplitude components are distributed as $A_{xj}, B_{xj} \sim \mathcal{N}(0, \sigma_x^2)$ with $\sigma_x =  \sqrt{\frac{\sum_{k=1}^{N}{x_k}}{2}}$ and  $A_{yj}, B_{yj} \sim \mathcal{N}(0, \sigma_y^2)$ with $\sigma_y = \sqrt{\frac{\sum_{k=1}^{N}{y_k}}{2}}$. \textbf{Note that these distributions for the Fourier amplitudes only hold if the underlying process producing the observations is stochastic and wide-sense stationary (like e.g.\ the white noise case considered here) as is commonly observed in a wide range of astrophysical sources including black hole X-ray binaries and AGN. For strictly deterministic processes, the distributions of the Fourier amplitudes will not be centered on $\mu = 0$, and the distributions below will not be correct.}
+
 For standard periodograms, $A_{xj} = A_{yj}$ and $B_{xj} = B_{yj}$, and the power spectral density reduces to $P_j = \frac{1}{2} (A_j^2 + B_j^2)$, which is well-known to follow a $\chi^2$ distribution with $2$ degrees of freedom. 
 
 Because this condition is not fulfilled for cospectra, we need to derive the probability distribution of the sum of the products over \textit{independent} Gaussian random variables. The probability distribution of the product of two random variables\footnote{We continue the following derivation using the amplitudes $A_j$, but the same arguments apply exactly to the imaginary amplitudes $B_j$.} $Z = A_{xj}A_{yj}$ is called the product distribution, defined as 
@@ -213,7 +233,7 @@ P_Z(z) = \frac{K_0\left( \frac{|z|}{\sigma_x \sigma_y}\right)}{\pi \sigma_x \sig
 
 \begin{figure*}
 \begin{center}
-\includegraphics[width=\textwidth]{../figs/cs_dist.png}
+\includegraphics[width=\textwidth]{cs_dist.png}
 \caption{Distribution of Leahy-normalized cospectral densities (left) and power spectral densities (right), respectively, for the simulated data. In dark grey, we show fine-grained histograms of the simulated powers. In red we plot the theoretical probability distribution the simulated powers should follow: A Laplace distribution with $\mu=0$ and $\sigma=2$ for the cospectral densities and a $\chi^2$-distribution with $2$ degrees of freedom for the power spectral densities. The simulated powers adhere very closely to the theoretical predictions.}
 \label{fig:csdist}
 \end{center}
@@ -297,7 +317,7 @@ F_{C_j}(x)) =
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=9cm]{../figs/tailprob.png}
+\includegraphics[width=9cm]{tailprob.png}
 \caption{Tail probabilities for the Laplace and $\chi^2$ distributions, respectively. The tail probability, or survival function, is defined as $SF(x) = 1 - CDF(x)$. The tail probability measures the probability of observing a value $x\geq X$, and is often used for detecting periods in power spectra. For the power spectral densities, we plot both the theoretical prediction for the survival function based on the $\chi^2$ distribution (black dashed line), as well as the corrected distribution for power spectra derived in \citet{groth1975} (red solid line). For illustrative purposes, we show a single-trial $95\%$ detection threshold for the Laplace distribution (black solid vertical line) and the $\chi^2$ distribution (black dashed vertical line).}
 \label{fig:survival}
 \end{center}
@@ -305,7 +325,7 @@ F_{C_j}(x)) =
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=9cm]{../figs/cs_detec.png}
+\includegraphics[width=9cm]{cs_detec.png}
 \caption{Cospectrum of two simulated light curves, each with a constant continuum flux of $10$ counts per bin and a periodic signal at $10\,\mathrm{Hz}$. The latter is clearly visible in the cospectrum. We also show the 99\% detection threshold, corrected for a number of trials equal to the number of spectral bins, assuming Laplace-distributed data (red solid line) and $\chi^2$-distributed data (red dashed line). When the latter distribution is assumed, the periodic signal would not be considered a significant detection, because the $\chi^2$ distribution produces a wider distribution of powers. Applying the correct Laplace distribution, however, allows for the detection of weaker signals.}
 \label{fig:cs_sim}
 \end{center}
@@ -314,7 +334,7 @@ F_{C_j}(x)) =
 
 \begin{figure*}
 \begin{center}
-\includegraphics[width=\textwidth]{../figs/avg_dist.png}
+\includegraphics[width=\textwidth]{avg_dist.png}
 \caption{Histogram of cospectral powers (grey) and the theoretical expectation (red) for three different cases. In the right panel, we show the distribution of powers for a single cospectrum, with its expected Laplace distribution from Equation \ref{eqn:laplace}, in the middle and right panel cospectral powers for averaging 10 (middle) and 100 (right) individual cospectra together. In the middle panel, the theoretical expectation of the sampling distribution is given by Equation \ref{eqn:averaged_pdf}, in the right panel by a Gaussian distribution with $\sigma=\sqrt{2/101}$.}
 \label{fig:avg_dist}
 \end{center}
@@ -342,7 +362,7 @@ f_{\overline{X}_n}(x) = \frac{n e^{-|nx|}}{(n-1)! 2^n} \sum_{j=0}^{n-1} \frac{(n
 \label{eqn:averaged_pdf}
 \end{equation}
 
-For practical purposes, evaluating this PDF for averaged spectra above $n\sim 85$ is difficult numerically, because the factorials and exponents in the sum become very large and small, respectively. However, as we will show in Section \ref{sec:averaged_detthres} below, we find that in practice, when $n \gtrsim 30$, detection thresholds derived from Equation \ref{eqn:averaged_pdf} provide only a negligible difference over that derived from a normal distribution $N(0, \sqrt{2/(n+1)}$, depending on the significance threshold required and the number of trials. 
+For practical purposes, evaluating this PDF for averaged spectra above $n\sim 85$ is difficult numerically, because the factorials and exponents in the sum become very large and small, respectively. However, as we will show in Section \ref{sec:averaged_detthres} below, \textbf{we expect that for large $n$, the Central Limit Theorem implies that the PDF of averaged cospectral powers tends towards a normal distribution.} We find that in practice, when $n \gtrsim 30$, detection thresholds derived from Equation \ref{eqn:averaged_pdf} provide only a negligible difference over that derived from a normal distribution $N(0, \sqrt{2/(n+1)}$, depending on the significance threshold required and the number of trials. 
 
 In order to derive tail probabilities useful for hypothesis testing, we require the CDF rather than the PDF. In order to correctly account for the absolute values in the PDF, we split the CDF into two parts: a case where $x < 0$ and a case where $x \geq 0$. The integral $F_{\overline{X}_n}(x) = P ( X \leq x) = \int_{\infty}^{x} f_{\overline{X}_n}(t) dt$ then becomes:
 
@@ -366,7 +386,7 @@ D = \frac{n(n-1+j)!}{(n-1-j)! (n-1)! 2^{n+j}} \, .
 
 \begin{figure*}
 \begin{center}
-\includegraphics[width=\textwidth]{../figs/avg_pvalues.png}
+\includegraphics[width=\textwidth]{avg_pvalues.png}
 \caption{Predictions for single-trial $p$-values as a function of cospectral power, for the simulated data sets (black solid line) compared to the theoretically predicted $p$-values using the CDF derived in Equation \ref{eqn:averaged_cdf} (red dashed line) as well as the survival function of a Gaussian distribution (black dashed line). The exact distribution matches the empirically derived tail probabilities from simulations within the uncertainties of the simulations. For the case of two averaged cospectra (left panel), a Gaussian approximation is obviously the wrong choice, and will lead to vastly overestimated significances, because the Gaussian PDF drops off much more sharply than the exact distribution. However, as more cospectra are averaged, the resulting distribution becomes more and more similar to that of a Gaussian (middle panel), and for $\sim$30 averaged cospectra, a Gaussian survival function yields a reasonably good approximation to the tail probabilities one would derive from simulations (right panel), up to $p \approx 10^{-4}$.}
 \label{fig:avg_pvalue}
 \end{center}
@@ -379,13 +399,22 @@ In order to show the way the probability distribution changes as a function of a
 
 In order to assess the effect on the $p$-values derived from averaged cospectra, we calculate the tail probabilities for the simulated data sets and compare them with the theoretically expected survival function as defined in Equation \ref{eqn:averaged_cdf} as well as a simple Gaussian distribution (Figure \ref{fig:avg_pvalue}). Similar to the results derived by \citet{balakrishnan1986}, we find that for cospectra of more than 30 averaged light curves, a Gaussian distribution yields a reasonably good approximation to the true distribution up to $p \approx 10^{-4}$ with lower overhead. Note, however, that this holds for single-trial probabilities. In general, one will wish to correct for calculating the significance of multiple trial frequencies, requiring the use of more stringent significance threshold. As shown in Figure \ref{fig:avg_pvalue}, the tail probabilities diverge as a function of power, and thus the Gaussian approximation will increasingly overestimate the significance of the signal the higher the threshold is set. Depending on the number of trials used, it is hence advisable to use Equation \ref{eqn:averaged_cdf} as long as it remains numerically stable (depending on implementation, up to $\sim$85 averaged cospectra).
 
+\section{\textbf{Caveats}}
+
+\textbf{All caveats applying more generally to Fourier analysis and to periodograms specifically also apply to cospectra. In particular, as for the $\chi^2$ distribution used for period searches in periodograms, the distributions derived here assume that the underlying process is wide-sense stationary and the light curves are simultaneously and evenly sampled. These conditions are typically met in most observations taken with X-ray timing instruments like \nustar\ and \rxte\ for problems such as X-ray timing of X-ray binaries, AGN and X-ray pulsar searches. Note that this assumes, however, that the time scales of interest are much shorter than outburst timescales in X-ray binaries or changes in the X-ray background in pulsar searchers. Non-stationarity (as is e.g.\ observed in flares) will impose a window function onto the cospectrum and shift the mean of the Fourier amplitudes, thus invalidating the assumptions above (for an illustrative example of this effect and its implications on period searches in periodograms of magnetar bursts, see \citealt{huppenkothen2013}). Uneven sampling more generally introduces covariances between adjacent frequencies and renders many of the statistical assumptions underpinning period searches using both in the periodogram and the cospectrum invalid. For unevenly sampled data, other methods that do not depend on a regular sampling pattern must be employed (for example the Lomb-Scargle periodogram \citep{lomb1976, scargle1982} or the Bayesian period search in \citet{gregory1992}).}
+
+\textbf{An additional assumption is the phase-alignment of the periodic signal to be detected in both light curves. This is always true when the same source is observed simultaneously in the same energy range in independent, but identical detectors on the same spacecraft, as is common practice for instruments like \nustar\, \astrosat\ and \rxte. Because the phase of the periodic signal can more generally be energy-dependent, we caution the reader to be careful when producing cospectra of light curves taken for example in different energy ranges. Similarly, the phase of a quasi-periodic signal can shift with times, thus observations at different points in time, or of different sources must be analyzed similarly carefully. In all these cases, period searches will only be sensitive to signals that are phase-aligned, and will in the worst case be undetectable if the phase-shift is 90 or 270 degrees. }
+
 
 \section{Example: A QPO in \nustar}
 \label{sec:nustarqpo}
 
+In the following, we first simulate a QPO as expected to be observed in a typical \nustar\ observation, and then show similarly real \nustar\ data containing a signal. 
+
+\subsection{Simulated Data}
 \begin{figure*}
 \begin{center}
-\includegraphics[width=\textwidth]{../figs/qpo.png}
+\includegraphics[width=\textwidth]{qpo.png}
 \caption{Comparison of the averaged periodograms from the two detectors (blue), the periodogram obtained by the sum of the light curves (yellow; both left panel) and the cospectrum (right panel), for $3000\,\mathrm{s}$ of synthetic \nustar data with an incident count rate of $200 \mathrm{counts}\mathrm{s}^{-1}$ and a strong QPO at $200\,\mathrm{Hz}$. 
 The QPO has an rms of $\sim$9\% and a high Q factor of $\sim$40. The shape of the periodogram is strongly distorted from the expected flat powerspectrum centred on a constant value of $2$, with deviations of more that $0.5$ in the mean level of the powers common. In dashed lines, we also show the expected (trial-corrected) $99\%$ confidence level for the periodograms (in the same colour, left panel) as well as the cospectrum (red, right panel). The signal is detected in both the periodogram of the combined light curves as well as the cospectrum. However, because the white noise level is variable in the periodogram and the power spectrum dips below the expected level of $2$ around the frequency of the QPO, the signal is not detected as significantly as it should have been if no dead time was present. Assessing the significance is much more straightforward in the cospectrum, which retains a flat baseline.
 }
@@ -398,6 +427,13 @@ In order to show the difference of the detection limits with the cospectrum and 
 
 The results are shown in Figure~\ref{fig:qpo}. While in all three cases, the QPO is clearly visible, the two periodograms show strong deviations from the expected flat power spectrum. The shape is distorted and requires a precise model of the non-linearly increasing baseline with a non-linearly increasing rms. While in principle, the periodogram of the combined light curves would have a higher significance by a factor of $\sqrt{2}$, the modeling requirements complicate the calculation of the significance of the QPO. 
 The baseline of the cospectrum, conversely, is not distorted by dead time, and requires only an estimate of the \textit{local} rms in order to calculate the significance of the QPO using Equation~\ref{eqn:averaged_cdf}: it is sufficient to \textit{multiply the cospectrum around the feature by an estimate of the local standard deviation of the white noise} (which is 1 in the ideal case) to use the equations above with no modifications.
+
+\subsection{\nustar\ Observations}
+
+[ADD SOME STUFF ABOUT THE OBSERVATIONS.]
+
+
+
 
 \section{Discussion and Conclusions}
 \label{sec:discussion}
