@@ -224,7 +224,7 @@ For standard periodograms, $A_{xj} = A_{yj}$ and $B_{xj} = B_{yj}$, and the powe
 Because this condition is not fulfilled for cospectra, we need to derive the probability distribution of the sum of the products over \textit{independent} Gaussian random variables. The probability distribution of the product of two random variables\footnote{We continue the following derivation using the amplitudes $A_j$, but the same arguments apply exactly to the imaginary amplitudes $B_j$.} $Z = A_{xj}A_{yj}$ is called the product distribution, defined as 
 
 \begin{eqnarray}
-p_Z(z) & = & \int_{-\infty}^{+\infty}{p_X(x) p_Y(\frac{z}{x}) \frac{1}{|x|} dx} \\\nonumber
+p_Z(z) & = & \int_{-\infty}^{+\infty}{p_X(x) p_Y(\frac{z}{x}) \frac{1}{|x|} dx} \nonumber \\
 	   & = &  \int_{-\infty}^{+\infty}{\frac{1}{2 \pi \sigma_x \sigma_y} \exp{-\frac{x^2}{2\sigma_x^2}} \exp{-\frac{(z/x)^2}{2\sigma_y^2}} \frac{1}{|x|} dx} \label{eqn:pz} \, .
 \end{eqnarray}
 
@@ -414,7 +414,7 @@ In order to assess the effect on the $p$-values derived from averaged cospectra,
 
 \begin{figure*}
 \begin{center}
-\includegraphics[width=\textwidth]{whitenoise_deadtime.png}
+%\includegraphics[width=\textwidth]{whitenoise_deadtime.png}
 \caption{\textbf{Left panel: Fourier products derived from white noise light curves heavily affected by dead time. There is a strong, frequency-dependent modulation in the periodogram (orange) introduced by dead time effects, rendering standard tests for periodicities unreliable. The cospectrum (dark grey) is less affected overall, but there remains a frequency-dependent variation in the local variance, with a narrower distribution governing the cospectral densities at low frequencies, and a wider distribution e.g.\ between 200 and 400 Hz. Applying the FAD correction (blue) produces a cospectrum that follows the distributions defined in this paper very closely, allowing for reliable periodicity testing. Right panel: histograms of cospectral densities derived from $1000$ simulated, dead time-affected cospectra (dark grey) and their FAD-corrected equivalents (blue). The dead time-affected cospectra overall have a narrower distribution (but note that this is integrated over all frequencies, thus the frequency dependence is washed out), whereas the corrected cospectra follow the expected distribution (red).
 }}
 \label{fig:wn_dt}
