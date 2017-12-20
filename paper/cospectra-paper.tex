@@ -226,7 +226,7 @@ For standard periodograms, $A_{xj} = A_{yj}$ and $B_{xj} = B_{yj}$, and the powe
 Because this condition is not fulfilled for cospectra, we need to derive the probability distribution of the sum of the products over \textit{independent} Gaussian random variables. The probability distribution of the product of two random variables\footnote{We continue the following derivation using the amplitudes $A_j$, but the same arguments apply exactly to the imaginary amplitudes $B_j$.} $Z = A_{xj}A_{yj}$ is called the product distribution, defined as 
 
 \begin{eqnarray}
-p_Z(z) & = & \int_{-\infty}^{+\infty}{p_X(x) p_Y(\frac{z}{x}) \frac{1}{|x|} dx} \\\nonumber
+p_Z(z) & = & \int_{-\infty}^{+\infty}{p_X(x) p_Y(\frac{z}{x}) \frac{1}{|x|} dx} \nonumber \\
 	   & = &  \int_{-\infty}^{+\infty}{\frac{1}{2 \pi \sigma_x \sigma_y} \exp{-\frac{x^2}{2\sigma_x^2}} \exp{-\frac{(z/x)^2}{2\sigma_y^2}} \frac{1}{|x|} dx} \label{eqn:pz} \, .
 \end{eqnarray}
 
@@ -457,16 +457,6 @@ The QPO has an rms of $\sim$9\% and a high Q factor of $\sim$40. The shape of th
 
 %\end{bf}
 
-
-
-
-\subsection{A Simulated QPO in \nustar}
-
-In order to show the difference of the detection limits with the cospectrum and the power spectrum, we show how a QPO at 200 Hz from a very bright source would appear in \nustar. 
-We simulate a light curve of $T=3000\mathrm{s}$ duration with a time resolution of $\delta t = 0.5 \,\mathrm{ms}$ and an average count rate of $200 \,\mathrm{counts}\,\mathrm{s}^{-1}$. To this constant background we add a quasi-periodic oscillation with a period of $5\,\mathrm{ms}$, a fractional rms amplitude of $f_\mathrm{rms} = 0.15$ and phases randomized using a normal distribution with a mean of $0$ and a width of $\sigma_\mathrm{qpo} = 0.01$. After producing this light curve, the procedure is similar to that followed by \citet{Bachetti+15}. We simulated photon events using rejection sampling from this light curve using the software package \textit{stingray}\footnote{\url{https://github.com/StingraySoftware/stingray}}, running the function \texttt{stingray.Eventlist.simulate\_times()} twice in order to produce two light curves that are statistically independent, but have the same signal and properties, as we would expect from an instrument with two independent detectors observing the same object. Subsequently we simulated variable deadtime for both light curves with an average time scale of $2.5 \,\mathrm{ms}$ as commonly seen in \nustar\ data \citep{Bachetti+15} using \textit{HENDRICS}\footnote{\url{https://github.com/StingraySoftware/HENDRICS}} \citep{bachetti2015b}. We then produced the periodogram of the summed light curves, the averaged periodogram of the two individual light curves, and the cospectrum of the two light curves. Note that in all three cases we produced averaged periodograms and co-spectra by splitting the light curves into 600 segments of $5\,\mathrm{s}$ length each in order to suppress the variance in the powers and show the effects of dead time more clearly. \textbf{As mentioned above, cospectra with dead time are subject to frequency-dependent changes in variance, and we thus corrected the simulated cospectra using the FAD technique.}
-
-The results are shown in Figure~\ref{fig:qpo}. While in all three cases, the QPO is clearly visible, the two periodograms show strong deviations from the expected flat power spectrum. The shape is distorted and requires a precise model of the non-linearly increasing baseline with a non-linearly increasing rms. While in principle, the periodogram of the combined light curves would have a higher significance by a factor of $\sqrt{2}$, the modeling requirements complicate the calculation of the significance of the QPO. 
-The baseline of the cospectrum, conversely, is not distorted by dead time, and requires only an estimate of the \textit{local} rms in order to calculate the significance of the QPO using Equation~\ref{eqn:averaged_cdf}: it is sufficient to \textit{multiply the cospectrum around the feature by an estimate of the local standard deviation of the white noise} (which is 1 in the ideal case) to use the equations above with no modifications.
 \begin{figure*}
 \begin{center}
 \includegraphics[width=\textwidth]{nustar_lc_psd.pdf}
@@ -476,15 +466,14 @@ The baseline of the cospectrum, conversely, is not distorted by dead time, and r
 \end{center}
 \end{figure*}
 
-\begin{figure*}
-\begin{center}
-\includegraphics[width=\textwidth]{nustar_cospectra.pdf}
-\caption{\textbf{Upper panel: Cospectrum of a $10\,\mathrm{s}$ segment of the \nustar\ observations of Her X-1 (black). The cospectrum is created by observing the same source simultaneously, but statistically independently with the two identical FPMA and FPMB detectors. The rotational signal of the pulsar appears very clearly at $\nu_\mathrm{rot} = 0.806\,\mathrm{Hz}$, but unlike the periodogram, the cospectrum is not affected by dead time. In red, we show the $p = 10^{-3}$ detection threshold, corrected for $6999$ trials (equivalent to the number of frequencies in the periodogram). Lower left:  histogram (grey) of the cospectral densities collected from 3260 individual cospectra between $50\,\mathrm{Hz}$ and $400\,\mathrm{Hz}$. In red, we also show the theoretically predicted Laplace distribution. Lower right: in black, the histogram of cospectral densities collected from $7$ averaged cospectra, each created from $15$ light curve segments of $200\,\mathrm{s}$ duration. Again, only cospectral densities between $50\,\mathrm{Hz}$ and $400\,\mathrm{Hz}$ were used in this figure. In red, we show the theoretical probability density function defined in Equation \ref{eqn:averaged_pdf} with $n = 15$. For both averaged and single cospectra, the observed histogram matches the theoretically expected distributions very closely.
-}}
-\label{fig:herx1_cs}
-\end{center}
-\end{figure*}
 
+\subsection{A Simulated QPO in \nustar}
+
+In order to show the difference of the detection limits with the cospectrum and the power spectrum, we show how a QPO at 200 Hz from a very bright source would appear in \nustar. 
+We simulate a light curve of $T=3000\mathrm{s}$ duration with a time resolution of $\delta t = 0.5 \,\mathrm{ms}$ and an average count rate of $200 \,\mathrm{counts}\,\mathrm{s}^{-1}$. To this constant background we add a quasi-periodic oscillation with a period of $5\,\mathrm{ms}$, a fractional rms amplitude of $f_\mathrm{rms} = 0.15$ and phases randomized using a normal distribution with a mean of $0$ and a width of $\sigma_\mathrm{qpo} = 0.01$. After producing this light curve, the procedure is similar to that followed by \citet{Bachetti+15}. We simulated photon events using rejection sampling from this light curve using the software package \textit{stingray}\footnote{\url{https://github.com/StingraySoftware/stingray}}, running the function \texttt{stingray.Eventlist.simulate\_times()} twice in order to produce two light curves that are statistically independent, but have the same signal and properties, as we would expect from an instrument with two independent detectors observing the same object. Subsequently we simulated variable deadtime for both light curves with an average time scale of $2.5 \,\mathrm{ms}$ as commonly seen in \nustar\ data \citep{Bachetti+15} using \textit{HENDRICS}\footnote{\url{https://github.com/StingraySoftware/HENDRICS}} \citep{bachetti2015b}. We then produced the periodogram of the summed light curves, the averaged periodogram of the two individual light curves, and the cospectrum of the two light curves. Note that in all three cases we produced averaged periodograms and co-spectra by splitting the light curves into 600 segments of $5\,\mathrm{s}$ length each in order to suppress the variance in the powers and show the effects of dead time more clearly. \textbf{As mentioned above, cospectra with dead time are subject to frequency-dependent changes in variance, and we thus corrected the simulated cospectra using the FAD technique.}
+
+The results are shown in Figure~\ref{fig:qpo}. While in all three cases, the QPO is clearly visible, the two periodograms show strong deviations from the expected flat power spectrum. The shape is distorted and requires a precise model of the non-linearly increasing baseline with a non-linearly increasing rms. While in principle, the periodogram of the combined light curves would have a higher significance by a factor of $\sqrt{2}$, the modeling requirements complicate the calculation of the significance of the QPO. 
+The baseline of the cospectrum, conversely, is not distorted by dead time, and requires only an estimate of the \textit{local} rms in order to calculate the significance of the QPO using Equation~\ref{eqn:averaged_cdf}: it is sufficient to \textit{multiply the cospectrum around the feature by an estimate of the local standard deviation of the white noise} (which is 1 in the ideal case) to use the equations above with no modifications.
 
 \subsection{\nustar\ Observations of Her X-1}
 
@@ -498,6 +487,15 @@ For our analysis, we considered photons from 3 to 79 keV at most 50\arcsec\ from
 For this work, we used a total of $32.67\,\mathrm{ks}$ of good time intervals (GTIs), only selecting intervals longer than $10\,\mathrm{s}$. In Figure \ref{fig:herx1_lc} (upper panel), we present the light curve of the \nustar Her X-1 observations. The source varied substantially in brightness during the observations on fairly long time scales (10s to 1000s of seconds), indicating a significant source of red noise at low frequencies.
 
 In the lower panel of Figure \ref{fig:herx1_lc}, we present an averaged periodogram created from a total of $3260$ light curve segments, each $10\,\mathrm{s}$ in duration. The periodogram shows very strong peaks at the $1.24\,\mathrm{s}$ rotational period of the pulsar, along with its first five harmonics. While at low frequencies, the deviation from the expected noise distribution (a $\chi^2$ distribution centered on $2$) can be explained with the longer-term variability within the source, at frequencies above $5 \,\mathrm{Hz}$ or so, the periodogram displays the typical oscillatory pattern associated with dead time (see also \citealt{Bachetti+15}), suggesting that the standard distributions usually applied to periodograms will not produce unbiased results for these observations.
+
+\begin{figure*}
+\begin{center}
+\includegraphics[width=\textwidth]{nustar_cospectra.pdf}
+\caption{\textbf{Upper panel: Cospectrum of a $10\,\mathrm{s}$ segment of the \nustar\ observations of Her X-1 (black). The cospectrum is created by observing the same source simultaneously, but statistically independently with the two identical FPMA and FPMB detectors. The rotational signal of the pulsar appears very clearly at $\nu_\mathrm{rot} = 0.806\,\mathrm{Hz}$, but unlike the periodogram, the cospectrum is not affected by dead time. In red, we show the $p = 10^{-3}$ detection threshold, corrected for $6999$ trials (equivalent to the number of frequencies in the periodogram). Lower left:  histogram (grey) of the cospectral densities collected from 3260 individual cospectra between $50\,\mathrm{Hz}$ and $400\,\mathrm{Hz}$. In red, we also show the theoretically predicted Laplace distribution. Lower right: in black, the histogram of cospectral densities collected from $7$ averaged cospectra, each created from $15$ light curve segments of $200\,\mathrm{s}$ duration. Again, only cospectral densities between $50\,\mathrm{Hz}$ and $400\,\mathrm{Hz}$ were used in this figure. In red, we show the theoretical probability density function defined in Equation \ref{eqn:averaged_pdf} with $n = 15$. For both averaged and single cospectra, the observed histogram matches the theoretically expected distributions very closely.
+}}
+\label{fig:herx1_cs}
+\end{center}
+\end{figure*}
 
 In Figure \ref{fig:herx1_cs} (upper panel), we present a cospectrum of the Her X-1 \nustar\ observation. Because the periodic signal generated by the pulsar dominates the cospectrum, we plot the cospectrum of a short segment of $10\,\mathrm{s}$ duration starting at $\mathrm{MET} = 85740109.54169$ for illustrative purpose to highlight the noise properties. Unlike the periodogram, the cospectrum is not modulated by dead time, and the statistical distributions defined in Section \ref{sec:whitenoise_cospectra} apply once the cospectra are corrected using the FAD technique (see also Figure \ref{fig:herx1_cs}, lower left panel and below). We also show the trial-corrected detection threshold under the null hypothesis that the cospectrum consists solely of white noise. The highest cospectral density of $P = 55.16$ occurs at the frequency of the pulsar, $\nu_\mathrm{rot} = 0.806\,\mathrm{Hz}$; the probability of observing this power under the null hypothesis is effectively $p \sim 0$ within the limits of numerical accuracy. 
 
